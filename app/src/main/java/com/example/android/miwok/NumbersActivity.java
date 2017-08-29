@@ -2,12 +2,7 @@ package com.example.android.miwok;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -16,20 +11,20 @@ public class NumbersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_numbers);
+        setContentView(R.layout.word_list);
 
-        //Create an arraylist of English words for common numbers
-        ArrayList<Word> numberEnglishWords = new ArrayList<Word>();
-        numberEnglishWords.add(new Word("one","lutti"));
-        numberEnglishWords.add(new Word("two","otiiko"));
-        numberEnglishWords.add(new Word("three","tolookosu"));
-        numberEnglishWords.add(new Word("four","oyyisa"));
-        numberEnglishWords.add(new Word("five","massokka"));
-        numberEnglishWords.add(new Word("six","temmokka"));
-        numberEnglishWords.add(new Word("seven","kenekaku"));
-        numberEnglishWords.add(new Word("eight","kawinta"));
-        numberEnglishWords.add(new Word("nine","wo'e"));
-        numberEnglishWords.add(new Word("ten","na'aacha"));
+        //Create an arraylist of English/Miwok word combos for common numbers
+        ArrayList<Word> numberWords = new ArrayList<>();
+        numberWords.add(new Word("one","lutti"));
+        numberWords.add(new Word("two","otiiko"));
+        numberWords.add(new Word("three","tolookosu"));
+        numberWords.add(new Word("four","oyyisa"));
+        numberWords.add(new Word("five","massokka"));
+        numberWords.add(new Word("six","temmokka"));
+        numberWords.add(new Word("seven","kenekaku"));
+        numberWords.add(new Word("eight","kawinta"));
+        numberWords.add(new Word("nine","wo'e"));
+        numberWords.add(new Word("ten","na'aacha"));
 
 //        LinearLayout rootView = (LinearLayout) findViewById(R.id.rootView);
 //
@@ -40,14 +35,14 @@ public class NumbersActivity extends AppCompatActivity {
 //        }
 
         //adapter knows how to create layouts for each item in the list, using the
-        //simple_list_item_1.xml layout resouce defined in the Android framework.
+        //simple_list_item_1.xml layout resource defined in the Android framework.
         //This list item layout contains a single {@link TextView}, which the adapter will set to
         //display a single word
-        ArrayAdapter<Word> itemsAdapter = new ArrayAdapter<Word>(this, R.layout.list_item, numberEnglishWords);
+        WordAdapter itemsAdapter = new WordAdapter(this, numberWords);
 
         //Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
         //There should be a {@link LIstView} with the view ID called list, which is declared in
-        //activity_numbers.xml layout file.
+        //word_listyout file.
         ListView listView = (ListView) findViewById(R.id.list);
 
         //Make the {@link ListView} use the {@link ArrayAdapter} we created above, so that the
