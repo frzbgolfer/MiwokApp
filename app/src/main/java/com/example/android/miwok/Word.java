@@ -1,6 +1,8 @@
 package com.example.android.miwok;
 
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
+import android.view.View;
 
 /**
  * Created by frzbg_orpozj7 on 8/28/2017.
@@ -13,14 +15,32 @@ public class Word {
     private String mMiwokTranslation;
     //Image resourse ID for the word
     private int mImageResourceId = NO_IMAGE_PROVIDED;
+    //Audio for the word
+    private int mWordAudio;
 
     private static final int NO_IMAGE_PROVIDED = -1;
 
     /**
-     * Create a new Word object with associated image resource id in addtion to the word pairs
+     * Create a new Word object with associated image and audio in addition to the word pairs
+     *
      * @param mDefaultTranslation is the word in a language that the user is familiar with (such as English)
-     * @param mMiwokTranslation is the word in the Miwok language
-     * @param mImageResourceId is the image resource id associated with the word
+     * @param mMiwokTranslation   is the word in the Miwok language
+     * @param mImageResourceId    is the image resource id associated with the word
+     * @param mWordAudio          is the audio resource id associated with the word
+     */
+    public Word(String mDefaultTranslation, String mMiwokTranslation, int mImageResourceId, int mWordAudio) {
+        this.mDefaultTranslation = mDefaultTranslation;
+        this.mMiwokTranslation = mMiwokTranslation;
+        this.mImageResourceId = mImageResourceId;
+        this.mWordAudio = mWordAudio;
+    }
+
+    /**
+     * Create a new Word object with associated image resource id in addtion to the word pairs
+     *
+     * @param mDefaultTranslation is the word in a language that the user is familiar with (such as English)
+     * @param mMiwokTranslation   is the word in the Miwok language
+     * @param mImageResourceId    is the image resource id associated with the word
      */
     public Word(String mDefaultTranslation, String mMiwokTranslation, int mImageResourceId) {
         this.mDefaultTranslation = mDefaultTranslation;
@@ -30,8 +50,9 @@ public class Word {
 
     /**
      * Create a new Word object with just the word pairs
+     *
      * @param mDefaultTranslation is the word in a language that the user is familiar with (such as English)
-     * @param mMiwokTranslation is the word in the Miwok language
+     * @param mMiwokTranslation   is the word in the Miwok language
      */
     public Word(String mDefaultTranslation, String mMiwokTranslation) {
         this.mDefaultTranslation = mDefaultTranslation;
@@ -54,7 +75,14 @@ public class Word {
         return mImageResourceId;
     }
 
-    public boolean hasImage(){
+    //Return whether or not the word has an image
+    public boolean hasImage() {
         return mImageResourceId != NO_IMAGE_PROVIDED;
     }
+
+    //Get the Audio file of the word
+    public int getmWordAudio() {
+        return mWordAudio;
+    }
+
 }

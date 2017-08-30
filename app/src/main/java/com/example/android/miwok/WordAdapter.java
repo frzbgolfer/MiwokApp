@@ -2,6 +2,7 @@ package com.example.android.miwok;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -45,7 +47,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
         }
 
         //Get the {@link Word} object located at this position in the list
-        Word currentWord = getItem(position);
+        final Word currentWord = getItem(position);
 
         //Find the TextView in the list_item.xml layout with default translation
         TextView defaultTransTextView = (TextView) listItemView.findViewById(R.id.default_text_view);
