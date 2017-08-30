@@ -30,7 +30,7 @@ public class PhrasesActivity extends AppCompatActivity {
         //simple_list_item_1.xml layout resource defined in the Android framework.
         //This list item layout contains a single {@link TextView}, which the adapter will set to
         //display a single word
-        WordAdapter itemsAdapter = new WordAdapter(this, phrasesWords);
+        WordAdapter itemsAdapter = new WordAdapter(this, phrasesWords, R.color.category_phrases);
 
         //Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
         //There should be a {@link LIstView} with the view ID called list, which is declared in
