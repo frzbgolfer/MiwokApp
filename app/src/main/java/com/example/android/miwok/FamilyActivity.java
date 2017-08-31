@@ -1,12 +1,16 @@
 package com.example.android.miwok;
 
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 public class FamilyActivity extends AppCompatActivity {
+    MediaPlayer mMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,7 +18,7 @@ public class FamilyActivity extends AppCompatActivity {
         setContentView(R.layout.word_list);
 
         //Create an arraylist of English/Miwok word combos for common family members
-        ArrayList<Word> familyWords = new ArrayList<>();
+        final ArrayList<Word> familyWords = new ArrayList<>();
         familyWords.add(new Word("father", "әpә", R.drawable.family_father, R.raw.family_father));
         familyWords.add(new Word("mother", "әṭa", R.drawable.family_mother, R.raw.family_mother));
         familyWords.add(new Word("son", "angsi", R.drawable.family_son, R.raw.family_son));
@@ -42,6 +46,18 @@ public class FamilyActivity extends AppCompatActivity {
         //Do this by calling the setAdapter method on the {@link ListView} object and pass in
         //1 argument, which is the {@link ArrayAdapter} with the variable name itemsAdapter.
         listView.setAdapter(itemsAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Gets the Word object that was clicked
+                Word word = familyWords.get(position);
+
+                //Plays the audio file associated with the Word object
+                mMediaPlayer = MediaPlayer.create(FamilyActivity.this, word.getmWordAudio());
+                mMediaPlayer.start();
+            }
+        });
     }
 }
 

@@ -40,24 +40,14 @@ public class Word {
      *
      * @param mDefaultTranslation is the word in a language that the user is familiar with (such as English)
      * @param mMiwokTranslation   is the word in the Miwok language
-     * @param mImageResourceId    is the image resource id associated with the word
+     * @param mWordAudio    is the audio resource id associated with the word
      */
-    public Word(String mDefaultTranslation, String mMiwokTranslation, int mImageResourceId) {
+    public Word(String mDefaultTranslation, String mMiwokTranslation, int mWordAudio) {
         this.mDefaultTranslation = mDefaultTranslation;
         this.mMiwokTranslation = mMiwokTranslation;
-        this.mImageResourceId = mImageResourceId;
+        this.mWordAudio = mWordAudio;
     }
 
-    /**
-     * Create a new Word object with just the word pairs
-     *
-     * @param mDefaultTranslation is the word in a language that the user is familiar with (such as English)
-     * @param mMiwokTranslation   is the word in the Miwok language
-     */
-    public Word(String mDefaultTranslation, String mMiwokTranslation) {
-        this.mDefaultTranslation = mDefaultTranslation;
-        this.mMiwokTranslation = mMiwokTranslation;
-    }
 
     //Get the default translation of the word
     public String getmDefaultTranslation() {

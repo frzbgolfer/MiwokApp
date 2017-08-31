@@ -13,14 +13,14 @@ import java.util.ArrayList;
 import static java.security.AccessController.getContext;
 
 public class NumbersActivity extends AppCompatActivity {
-    MediaPlayer mMediaPlayer;
+    private MediaPlayer mMediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_list);
 
         //Create an arraylist of English/Miwok word combos for common numbers
-        ArrayList<Word> numberWords = new ArrayList<>();
+        final ArrayList<Word> numberWords = new ArrayList<>();
         numberWords.add(new Word("one","lutti", R.drawable.number_one, R.raw.number_one));
         numberWords.add(new Word("two","otiiko", R.drawable.number_two, R.raw.number_two));
         numberWords.add(new Word("three","tolookosu", R.drawable.number_three, R.raw.number_three));
@@ -49,7 +49,7 @@ public class NumbersActivity extends AppCompatActivity {
         //Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
         //There should be a {@link LIstView} with the view ID called list, which is declared in
         //word_listyout file.
-        ListView listView = (ListView) findViewById(R.id.list);
+        final ListView listView = (ListView) findViewById(R.id.list);
 
         //Make the {@link ListView} use the {@link ArrayAdapter} we created above, so that the
         //{@link ListView} will display list items for each word in the list of words.
@@ -60,8 +60,11 @@ public class NumbersActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(NumbersActivity.this,"clicked: ", Toast.LENGTH_LONG).show();
-                mMediaPlayer.create(NumbersActivity.this, R.raw.number_one);
+                //Gets the Word object that was clicked
+                Word word = numberWords.get(position);
+
+                //Plays the audio file associated with the Word object
+                mMediaPlayer = MediaPlayer.create(NumbersActivity.this, word.getmWordAudio());
                 mMediaPlayer.start();
             }
         });
