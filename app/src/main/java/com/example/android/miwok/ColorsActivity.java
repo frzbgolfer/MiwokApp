@@ -12,7 +12,17 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class ColorsActivity extends AppCompatActivity {
-    MediaPlayer mMediaPlayer;
+    /**Handles playback of all the sound files*/
+    private MediaPlayer mMediaPlayer;
+    /**
+     * This listener gets triggered when the {@link MediaPlayer} has completed playing the audio file
+     */
+    private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            releaseMediaPlayer();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +60,41 @@ public class ColorsActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Release the media player if it currently exists because we are about to play a different sound file
+                releaseMediaPlayer();
+
                 //Gets the Word object that was clicked
                 Word word = colorWords.get(position);
 
                 //Plays the audio file associated with the Word object
                 mMediaPlayer = MediaPlayer.create(ColorsActivity.this, word.getmWordAudio());
                 mMediaPlayer.start();
+                mMediaPlayer.setOnCompletionListener(mCompletionListener);
             }
         });
+
+
     }
 
+    /**
+     * Clean up the media player by releasing its resourses
+     */
+    private void releaseMediaPlayer(){
+        //If the media player is not null, then it may be currently playing a sound.
+        if(mMediaPlayer != null){
+            //Regardless of the current state of teh media player, release its resources because we no longer need it
+            mMediaPlayer.release();
+
+            //Set the media player back to null. For our code, we've decided that setting the media player to null is
+            // an easy way to tell that the media player is not configured to play an audio file at the moment.
+            mMediaPlayer = null;
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        releaseMediaPlayer();
+    }
 }
 
