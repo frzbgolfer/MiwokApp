@@ -22,7 +22,9 @@ import static android.media.AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK;
  * A simple {@link Fragment} subclass.
  */
 public class NumbersFragment extends Fragment {
-    /**Handles playback of all the sound files*/
+    /**
+     * Handles playback of all the sound files
+     */
     private MediaPlayer mMediaPlayer;
     /**
      * This listener gets triggered when the {@link MediaPlayer} has completed playing the audio file
@@ -34,7 +36,9 @@ public class NumbersFragment extends Fragment {
         }
     };
     private AudioManager mAudioManager;
-    /**audio focus change listener to manage changes in focus */
+    /**
+     * audio focus change listener to manage changes in focus
+     */
     private AudioManager.OnAudioFocusChangeListener afChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
         public void onAudioFocusChange(int focusChange) {
@@ -42,8 +46,7 @@ public class NumbersFragment extends Fragment {
                 // Permanent loss of audio focus
                 // Stop the MediaPlayer and release resources
                 releaseMediaPlayer();
-            }
-            else if (focusChange == AUDIOFOCUS_LOSS_TRANSIENT || focusChange == AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+            } else if (focusChange == AUDIOFOCUS_LOSS_TRANSIENT || focusChange == AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
                 // Pause playback
                 mMediaPlayer.pause();
                 mMediaPlayer.seekTo(0);
@@ -69,16 +72,16 @@ public class NumbersFragment extends Fragment {
 
         //Create an arraylist of English/Miwok word combos for common numbers
         final ArrayList<Word> numberWords = new ArrayList<>();
-        numberWords.add(new Word("one","lutti", R.drawable.number_one, R.raw.number_one));
-        numberWords.add(new Word("two","otiiko", R.drawable.number_two, R.raw.number_two));
-        numberWords.add(new Word("three","tolookosu", R.drawable.number_three, R.raw.number_three));
-        numberWords.add(new Word("four","oyyisa", R.drawable.number_four, R.raw.number_four));
-        numberWords.add(new Word("five","massokka", R.drawable.number_five, R.raw.number_five));
-        numberWords.add(new Word("six","temmokka", R.drawable.number_six, R.raw.number_six));
-        numberWords.add(new Word("seven","kenekaku", R.drawable.number_seven, R.raw.number_seven));
-        numberWords.add(new Word("eight","kawinta", R.drawable.number_eight, R.raw.number_eight));
-        numberWords.add(new Word("nine","wo'e", R.drawable.number_nine, R.raw.number_nine));
-        numberWords.add(new Word("ten","na'aacha", R.drawable.number_ten, R.raw.number_ten));
+        numberWords.add(new Word("one", "lutti", R.drawable.number_one, R.raw.number_one));
+        numberWords.add(new Word("two", "otiiko", R.drawable.number_two, R.raw.number_two));
+        numberWords.add(new Word("three", "tolookosu", R.drawable.number_three, R.raw.number_three));
+        numberWords.add(new Word("four", "oyyisa", R.drawable.number_four, R.raw.number_four));
+        numberWords.add(new Word("five", "massokka", R.drawable.number_five, R.raw.number_five));
+        numberWords.add(new Word("six", "temmokka", R.drawable.number_six, R.raw.number_six));
+        numberWords.add(new Word("seven", "kenekaku", R.drawable.number_seven, R.raw.number_seven));
+        numberWords.add(new Word("eight", "kawinta", R.drawable.number_eight, R.raw.number_eight));
+        numberWords.add(new Word("nine", "wo'e", R.drawable.number_nine, R.raw.number_nine));
+        numberWords.add(new Word("ten", "na'aacha", R.drawable.number_ten, R.raw.number_ten));
 
 //        LinearLayout rootView = (LinearLayout) findViewById(R.id.rootView);
 //
@@ -121,7 +124,7 @@ public class NumbersFragment extends Fragment {
                         // Request permanent focus.
                         AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
-                if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED){
+                if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                     //Initializes the audio file associated with the Word object
                     mMediaPlayer = MediaPlayer.create(getActivity(), word.getmWordAudio());
                     //Plays the audio file associated with the Word object and sets a listener
@@ -137,9 +140,9 @@ public class NumbersFragment extends Fragment {
     /**
      * Clean up the media player by releasing its resourses
      */
-    private void releaseMediaPlayer(){
+    private void releaseMediaPlayer() {
         //If the media player is not null, then it may be currently playing a sound.
-        if(mMediaPlayer != null){
+        if (mMediaPlayer != null) {
             //Regardless of the current state of teh media player, release its resources because we no longer need it
             mMediaPlayer.release();
 
