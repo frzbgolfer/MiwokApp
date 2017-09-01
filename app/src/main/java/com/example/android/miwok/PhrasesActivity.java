@@ -1,5 +1,7 @@
 package com.example.android.miwok;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import static android.media.AudioManager.AUDIOFOCUS_LOSS_TRANSIENT;
+import static android.media.AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK;
 
 public class PhrasesActivity extends AppCompatActivity {
     /**Handles playback of all the sound files*/
@@ -21,11 +26,34 @@ public class PhrasesActivity extends AppCompatActivity {
             releaseMediaPlayer();
         }
     };
+    private AudioManager mAudioManager;
+    /**audio focus change listener to manage changes in focus */
+    private AudioManager.OnAudioFocusChangeListener afChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange(int focusChange) {
+            if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+                // Permanent loss of audio focus
+                // Stop the MediaPlayer and release resources
+                releaseMediaPlayer();
+            }
+            else if (focusChange == AUDIOFOCUS_LOSS_TRANSIENT || focusChange == AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+                // Pause playback
+                mMediaPlayer.pause();
+                mMediaPlayer.seekTo(0);
+            } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+                // Your app has been granted audio focus again
+                // restart playback if necessary
+                mMediaPlayer.start();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_list);
+
+        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         //Create an arraylist of English/Miwok word combos for common phrases
         final ArrayList<Word> phrasesWords = new ArrayList<>();
@@ -66,10 +94,21 @@ public class PhrasesActivity extends AppCompatActivity {
                 //Gets the Word object that was clicked
                 Word word = phrasesWords.get(position);
 
-                //Plays the audio file associated with the Word object
-                mMediaPlayer = MediaPlayer.create(PhrasesActivity.this, word.getmWordAudio());
-                mMediaPlayer.start();
-                mMediaPlayer.setOnCompletionListener(mCompletionListener);
+                // Request audio focus for playback
+                int result = mAudioManager.requestAudioFocus(afChangeListener,
+                        // Use the music stream.
+                        AudioManager.STREAM_MUSIC,
+                        // Request permanent focus.
+                        AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+
+                if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED){
+                    //Initializes the audio file associated with the Word object
+                    mMediaPlayer = MediaPlayer.create(PhrasesActivity.this, word.getmWordAudio());
+                    //Plays the audio file associated with the Word object and sets a listener
+                    //to listen for end of audio file
+                    mMediaPlayer.start();
+                    mMediaPlayer.setOnCompletionListener(mCompletionListener);
+                }
             }
         });
     }
@@ -82,6 +121,9 @@ public class PhrasesActivity extends AppCompatActivity {
         if(mMediaPlayer != null){
             //Regardless of the current state of teh media player, release its resources because we no longer need it
             mMediaPlayer.release();
+
+            // Abandon audio focus when playback complete
+            mAudioManager.abandonAudioFocus(afChangeListener);
 
             //Set the media player back to null. For our code, we've decided that setting the media player to null is
             // an easy way to tell that the media player is not configured to play an audio file at the moment.

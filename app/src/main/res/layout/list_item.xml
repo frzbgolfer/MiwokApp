@@ -12,25 +12,34 @@
 
     <LinearLayout
         android:id="@+id/word_combo_view_group"
-        style="@style/WordGroupStyle"
-        android:orientation="vertical"
+        style="@style/MainViewGroupStyle"
         tools:background="@color/category_numbers">
 
-        <TextView
-            android:id="@+id/miwok_text_view"
-            style="@style/TextViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            tools:text="lutti" />
 
-        <TextView
-            android:id="@+id/default_text_view"
-            style="@style/TextViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="one" />
+        <LinearLayout style="@style/WordViewGroupStyle">
 
+            <TextView
+                android:id="@+id/miwok_text_view"
+                style="@style/TextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                tools:text="lutti" />
+
+            <TextView
+                android:id="@+id/default_text_view"
+                style="@style/TextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="one" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_play_arrow" />
     </LinearLayout>
 
 

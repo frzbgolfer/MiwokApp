@@ -24,6 +24,7 @@
     <style name="MainStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">88dp</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:padding">16dp</item>
         <item name="android:textSize">18sp</item>
@@ -32,12 +33,21 @@
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
     </style>
 
-    <!-- Style for Word Groups LinearLayout View -->
-    <style name="WordGroupStyle">
-        <item name="android:layout_width">match_parent</item>
+    <!-- Style for Main LinearLayout View -->
+    <style name="MainViewGroupStyle">
         <item name="android:layout_height">88dp</item>
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+
+    <!-- Style for the Word View Group -->
+    <style name="WordViewGroupStyle">
+        <item name="android:layout_height">88dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">7</item>
         <item name="android:padding">16dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">vertical</item>
     </style>
 
     <!-- Style for the Word TextViews -->
